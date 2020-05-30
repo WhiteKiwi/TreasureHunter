@@ -46,6 +46,8 @@ void printFlags() {
     }
 }
 
+// ♨♨♨
+// 장애물 찍는 함수
 void printObstacles() {
     int i;
 
@@ -97,7 +99,7 @@ void printField() {
     printf("┘\n");
 }
 
-// 게임 정보 그리는 함수
+// 우측에 게임 정보 그리는 함수
 void printInfo() {
     // 출력 위치
     const int INFO_X = FIELD_SIZE*2 + 5, INFO_Y = 3;
