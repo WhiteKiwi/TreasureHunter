@@ -9,13 +9,49 @@
     #define RIGHT_KEY 77
     #define DOWN_KEY 80
 #define ESC_KEY 27
+#define ENTER_KEY 13
 
 
-static time_t inThePuddleTime;
-static time_t startTime;
-static int move_count = 0;
+// 난이도 선택
+void chooseLevel() {
+    int choice = 0;
+    int key;
+
+    printLevel(choice);
+    while(1) {
+        key = getch();
+        if (key == ARROW_KEY) {
+            key = getch();
+            switch(key) {
+                case UP_KEY:
+                    // 위
+                    if (choice != 0) {
+                        choice--;
+                        printLevel(choice);
+                    }
+                    break;
+                    break;
+                case DOWN_KEY:
+                    // 아래
+                    if (choice != 2) {
+                        choice++;
+                        printLevel(choice);
+                    }
+                    break;
+            }
+        } else if (key == ESC_KEY) {
+            exit(0);
+        } else if (key == ENTER_KEY) {
+            LEVEL = choice;
+            return;
+        }
+    }
+}
+
 
 // 게임종료 여부를 검사하는 함수
+static time_t startTime;
+static int move_count = 0;
 int checkGameOver() {
     // 제한시간을 넘으면 게임 오버
     if (time(NULL) - startTime >= LIMIT_TIME)
@@ -28,6 +64,7 @@ int checkGameOver() {
 }
 
 // 방향키를 입력받아 좌표를 조정하는 함수
+static time_t inThePuddleTime;
 void inputKey() {
     int key;
     key = getch();

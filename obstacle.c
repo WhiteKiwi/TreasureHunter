@@ -20,37 +20,39 @@ void suffleObstacles() {
 // type 0
 void bounce(){
     int c;
-    // 랜덤한 방향으로 튕김
-    c = rand() % 4;
 
+    sprintf(DEBUG_MSG, "c: %d", c);
     // 튕긴 위치가 밖이 아닐 때까지 재실행
     while(1) {
+        // 랜덤한 방향으로 튕김
+        c = rand() % 4;
         switch(c) {
-            printf("%d", c);
             case 0:
-                if (y != 1) {
+                if (y - 2 >= 1) {
                     y -= 2;
                     return;
                 }
                 break;
             case 1:
-                if (x != 2) {
+                if (x - 4 >= 2) {
                     x -= 4;
                     return;
                 }
                 break;
             case 2:
-                if (x < FIELD_SIZE*2-2) {
+                if (x + 4 <= FIELD_SIZE*2-2) {
                     x += 4;
                     return;
                 }
                 break;
             case 3:
-                if (y != FIELD_SIZE-1) {
+                if (y + 2 <= FIELD_SIZE-1) {
                     y += 2;
                     return;
                 }
                 break;
+            default:
+                exit(0);
         }
     }
 }

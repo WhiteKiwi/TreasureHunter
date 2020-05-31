@@ -1,6 +1,7 @@
 #include "models.c"
 
-#define IS_TEST 0 // 이 실행이 테스트인지 여부
+#define IS_TEST 1 // 이 실행이 테스트인지 여부
+static char DEBUG_MSG[50]; // DEBUG Message
 
 #define FIELD_SIZE 25 // Field 크기
 #define LIMIT_TIME 60 * 3 // 게임 진행 시간(초)

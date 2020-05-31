@@ -29,12 +29,8 @@ void initialize() {
 int main(){
     srand(time(NULL));
 
-    do {
-        printf("난이도를 선택하세요(상: 1, 중: 2, 하: 3): ");
-        scanf("%d", &LEVEL);
-    } while (LEVEL != 1 && LEVEL != 2 && LEVEL != 3);
-    // 난이도를 1, 2, 3으로 입력받았기에 0, 1, 2로 만들어야 해서 -1
-    LEVEL--;
+    // 난이도 선택
+    chooseLevel();
 
     // 게임 초기화
     initialize();

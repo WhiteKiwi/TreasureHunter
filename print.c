@@ -127,4 +127,65 @@ void printInfo() {
     printf("탐지기 획득 시 보물: ◎");
     gotoxy(INFO_X, INFO_Y + 12);
     printf("탐지기 획득 시 장애물: ♨");
+
+    if(IS_TEST) {
+        gotoxy(INFO_X, INFO_Y + 14);
+        printf("DEBUG_MSG: %s", DEBUG_MSG);
+    }
+}
+
+// 난이도 선택 페이지 그리는 함수
+void printLevel(int choice) {
+    int X=66, Y;
+    int i;
+    char level[][3] = { "상", "중", "하" };
+    
+    system("cls");
+    printf("\n");
+    printf("\t==================================  난이도를 선택하세요!  ================================== \n");
+    printf("\t※난이도가 높아질수록 깃발과 장애물의 수가 많아지고 안좋은 효과가 발생할 확률이 늘어납니다 :)");
+
+    for (i = 0; i < 3; i++){
+        Y = 7*i + 6;
+        if (choice == i) {
+            printf("\n\n\n");
+            printf("\t\t\t\t\t┏━━━━━━━━━━━━━━━━━━━━━━━━━┓\n");
+
+            printf("\t\t\t\t\t┃");
+            gotoxy(X, Y);
+            printf("┃\n");
+
+            printf("\t\t\t\t\t┃");
+            gotoxy(49, Y+1);
+            printf("난이도: %s", level[i]);
+            gotoxy(X, Y+1);
+            printf("┃\n");
+
+            printf("\t\t\t\t\t┃");
+            gotoxy(X, Y+2);
+            printf("┃\n");
+
+            printf("\t\t\t\t\t┗━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+        } else {
+            printf("\n\n\n");
+            printf("\t\t\t\t\t┌─────────────────────────┐\n");
+
+            printf("\t\t\t\t\t│");
+            gotoxy(X, Y);
+            printf("│\n");
+
+            printf("\t\t\t\t\t│");
+            gotoxy(49, Y+1);
+            printf("난이도: %s", level[i]);
+            gotoxy(X, Y+1);
+            printf("│\n");
+
+            printf("\t\t\t\t\t│");
+            gotoxy(X, Y+2);
+            printf("│\n");
+
+
+            printf("\t\t\t\t\t└─────────────────────────┘");
+        }
+    }
 }
