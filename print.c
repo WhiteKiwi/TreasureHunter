@@ -21,7 +21,7 @@ void printGame() {
 // 유저 그리는 함수
 void printUser() {
     gotoxy(x, y);
-    printf("◆");
+    printf("☆");
 
     //if (IS_TEST)
         //printf("%d, %d", x, y);
