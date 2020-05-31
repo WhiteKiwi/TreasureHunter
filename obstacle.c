@@ -101,22 +101,11 @@ void obstacleCheck() {
 
 // obstacle type을 확률별로 반환 
 int getRandomObstacleType() {
-    // 난이도에 따른 타입별 장애물이 나올 확률, 합이 100이 되어야 함
-    // - obstacle types - 
-    // 0: 바위 (튕겨냄)
-    // 1: 늪 (빠지면 n번 못움직임)
-    // 2: 물웅덩이 (빠지면 n초 못움직임)
-    const int PROB_OF_TYPE[3][NUM_OF_OBSTACLE_TYPE] = {
-        { 50, 25, 25 }, // 상
-        { 70, 15, 15 }, // 중
-        { 90, 5, 5 }    // 하
-    };
-
     // 위에서 정한 확률에 따라 깃발 타입을 뽑아 반환함
     int i, t = 0;
     int dice = rand() % 100;
     for(i = 0; i < NUM_OF_OBSTACLE_TYPE; i++){
-        t += PROB_OF_TYPE[LEVEL][i];
+        t += PROB_OF_OBSTACLE_TYPE[LEVEL][i];
         if (dice <= t)
             return i;
     }

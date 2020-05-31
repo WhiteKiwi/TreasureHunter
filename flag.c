@@ -78,24 +78,11 @@ void flagCheck() {
 
 // flag type을 확률별로 반환 
 int getRandomFlagType() {
-    // 난이도에 따른 타입별 깃발이 나올 확률, 합이 100이 되어야 함
-    // - flag types - 
-    // 0: 기본 (아무 효과 없음)
-    // 1: 포탈 (시작 지점으로 복귀)
-    // 2: 폭탄 (점수 초기화)
-    // 3: 탐지기 (보물 및 장애물의 위치 표시)
-    // 4: 보물 (점수 +1)
-    const int PROB_OF_TYPE[3][NUM_OF_FLAG_TYPE] = {
-        { 50, 30, 10, 0, 10 },  // 상
-        { 40, 25, 5, 10, 20 },  // 중
-        { 40, 17, 3, 10, 30 }   // 하
-    };
-
     // 위에서 정한 확률에 따라 깃발 타입을 뽑아 반환함
     int i, t = 0;
     int dice = rand() % 100;
     for(i = 0; i < NUM_OF_FLAG_TYPE; i++){
-        t += PROB_OF_TYPE[LEVEL][i];
+        t += PROB_OF_FLAG_TYPE[LEVEL][i];
         if (dice <= t)
             return i;
     }
