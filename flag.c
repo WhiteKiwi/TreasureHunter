@@ -1,4 +1,4 @@
-#include <time.h>
+#include "header/flag.h"
 
 // - flag types - 
 // 0: 기본 (아무 효과 없음)

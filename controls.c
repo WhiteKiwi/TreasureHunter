@@ -1,6 +1,4 @@
-#include "const.c"
-#include <stdlib.h>
-#include <time.h>
+#include "header/controls.h"
 
 // 키보드 입력값들
 #define ARROW_KEY 224

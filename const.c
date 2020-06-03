@@ -1,53 +1,53 @@
 #include "models.c"
 
-#define IS_TEST 0 // ÀÌ ½ÇÇàÀÌ Å×½ºÆ®ÀÎÁö ¿©ºÎ
+#define IS_TEST 0 // ì´ ì‹¤í–‰ì´ í…ŒìŠ¤íŠ¸ì¸ì§€ ì—¬ë¶€
 static char DEBUG_MSG[50]; // DEBUG Message
 
-#define FIELD_SIZE 25 // Field Å©±â
-#define LIMIT_TIME 60 * 3 // °ÔÀÓ ÁøÇà ½Ã°£(ÃÊ)
-#define LIMIT_COUNT 1000 // ÀÌµ¿ °¡´É È½¼ö
-static int x = 2, y = 1; // x, y ÁÂÇ¥
-static int score = 0; // Á¡¼ö
-static int LEVEL = 0; // ³­ÀÌµµ
+#define FIELD_SIZE 25 // Field í¬ê¸°
+#define LIMIT_TIME 60 * 3 // ê²Œìž„ ì§„í–‰ ì‹œê°„(ì´ˆ)
+#define LIMIT_COUNT 1000 // ì´ë™ ê°€ëŠ¥ íšŸìˆ˜
+static int x = 2, y = 1; // x, y ì¢Œí‘œ
+static int score = 0; // ì ìˆ˜
+static int LEVEL = 0; // ë‚œì´ë„
 
 
-static char *GAME_MESSAGE = ""; // ¾Ë¸²Ã¢¿¡ ¶ã ¸Þ¼¼Áö
-const char FLAG_TYPES[][50] = { "²Î!", "½ÃÀÛ ÁöÁ¡À¸·Î ´Ù½Ã!", "Æã~ º¸¹°µéÀÌ »ç¶óÁ®¹ö·È¾î¿ä!", "º¸¹° Å½Áö±â!", "º¸¹° È¹µæ!" };
-const char OBSTACLE_TYPES[][50] = { "°Å´ëÇÑ ¹ÙÀ§¿¡ Æ¨°Ü³³´Ï´Ù!", "¿õµ¢ÀÌ¿¡ ºüÁ³½À´Ï´Ù ¤Ð¤Ð", "´Ë¿¡ ºüÁ®¹ö·È¾î¿ä..!" };
+static char *GAME_MESSAGE = ""; // ì•Œë¦¼ì°½ì— ëœ° ë©”ì„¸ì§€
+const char FLAG_TYPES[][50] = { "ê½!", "ì‹œìž‘ ì§€ì ìœ¼ë¡œ ë‹¤ì‹œ!", "íŽ‘~ ë³´ë¬¼ë“¤ì´ ì‚¬ë¼ì ¸ë²„ë ¸ì–´ìš”!", "ë³´ë¬¼ íƒì§€ê¸°!", "ë³´ë¬¼ íšë“!" };
+const char OBSTACLE_TYPES[][50] = { "ê±°ëŒ€í•œ ë°”ìœ„ì— íŠ•ê²¨ë‚©ë‹ˆë‹¤!", "ì›…ë©ì´ì— ë¹ ì¡ŒìŠµë‹ˆë‹¤ ã… ã… ", "ëŠªì— ë¹ ì ¸ë²„ë ¸ì–´ìš”..!" };
 
 
-static Flag *flags; // ±ê¹ß Á¤º¸
-static int FLAG_COUNT[] = {8, 6, 4}; // ÇÑ ¹ø¿¡ Ãâ·ÂµÉ ±ê¹ß °³¼ö
-#define NUM_OF_FLAG_TYPE 5 // ±ê¹ß Á¾·ùÀÇ ¼ö
-// ³­ÀÌµµ¿¡ µû¸¥ Å¸ÀÔº° ±ê¹ßÀÌ ³ª¿Ã È®·ü, ÇÕÀÌ 100ÀÌ µÇ¾î¾ß ÇÔ
-// - flag types - 
-// 0: ±âº» (¾Æ¹« È¿°ú ¾øÀ½)
-// 1: Æ÷Å» (½ÃÀÛ ÁöÁ¡À¸·Î º¹±Í)
-// 2: ÆøÅº (Á¡¼ö ÃÊ±âÈ­)
-// 3: Å½Áö±â (º¸¹° ¹× Àå¾Ö¹°ÀÇ À§Ä¡ Ç¥½Ã)
-// 4: º¸¹° (Á¡¼ö +1)
+static Flag *flags; // ê¹ƒë°œ ì •ë³´
+static int FLAG_COUNT[] = {8, 6, 4}; // í•œ ë²ˆì— ì¶œë ¥ë  ê¹ƒë°œ ê°œìˆ˜
+#define NUM_OF_FLAG_TYPE 5 // ê¹ƒë°œ ì¢…ë¥˜ì˜ ìˆ˜
+// ë‚œì´ë„ì— ë”°ë¥¸ íƒ€ìž…ë³„ ê¹ƒë°œì´ ë‚˜ì˜¬ í™•ë¥ , í•©ì´ 100ì´ ë˜ì–´ì•¼ í•¨
+// - flag types -
+// 0: ê¸°ë³¸ (ì•„ë¬´ íš¨ê³¼ ì—†ìŒ)
+// 1: í¬íƒˆ (ì‹œìž‘ ì§€ì ìœ¼ë¡œ ë³µê·€)
+// 2: í­íƒ„ (ì ìˆ˜ ì´ˆê¸°í™”)
+// 3: íƒì§€ê¸° (ë³´ë¬¼ ë° ìž¥ì• ë¬¼ì˜ ìœ„ì¹˜ í‘œì‹œ)
+// 4: ë³´ë¬¼ (ì ìˆ˜ +1)
 static int PROB_OF_FLAG_TYPE[3][NUM_OF_FLAG_TYPE] = {
-    { 50, 30, 3, 7, 10 },  // »ó
-    { 45, 23, 2, 10, 20 },  // Áß
-    { 40, 19, 1, 10, 30 }   // ÇÏ
+        { 50, 30, 3, 7, 10 },  // ìƒ
+        { 45, 23, 2, 10, 20 },  // ì¤‘
+        { 40, 19, 1, 10, 30 }   // í•˜
 };
 
 
-static Obstacle *obstacles; // Àå¾Ö¹° Á¤º¸
-static int OBSTACLE_COUNT[] = {5, 3, 1}; // ÇÑ ¹ø¿¡ Ãâ·ÂµÉ Àå¾Ö¹° °³¼ö
-#define NUM_OF_OBSTACLE_TYPE 3 // Àå¾Ö¹° Á¾·ùÀÇ ¼ö
-// ³­ÀÌµµ¿¡ µû¸¥ Å¸ÀÔº° Àå¾Ö¹°ÀÌ ³ª¿Ã È®·ü, ÇÕÀÌ 100ÀÌ µÇ¾î¾ß ÇÔ
-// - obstacle types - 
-// 0: ¹ÙÀ§ (Æ¨°Ü³¿)
-// 1: ´Ë (ºüÁö¸é n¹ø ¸ø¿òÁ÷ÀÓ)
-// 2: ¹°¿õµ¢ÀÌ (ºüÁö¸é nÃÊ ¸ø¿òÁ÷ÀÓ)
+static Obstacle *obstacles; // ìž¥ì• ë¬¼ ì •ë³´
+static int OBSTACLE_COUNT[] = {5, 3, 1}; // í•œ ë²ˆì— ì¶œë ¥ë  ìž¥ì• ë¬¼ ê°œìˆ˜
+#define NUM_OF_OBSTACLE_TYPE 3 // ìž¥ì• ë¬¼ ì¢…ë¥˜ì˜ ìˆ˜
+// ë‚œì´ë„ì— ë”°ë¥¸ íƒ€ìž…ë³„ ìž¥ì• ë¬¼ì´ ë‚˜ì˜¬ í™•ë¥ , í•©ì´ 100ì´ ë˜ì–´ì•¼ í•¨
+// - obstacle types -
+// 0: ë°”ìœ„ (íŠ•ê²¨ëƒ„)
+// 1: ëŠª (ë¹ ì§€ë©´ në²ˆ ëª»ì›€ì§ìž„)
+// 2: ë¬¼ì›…ë©ì´ (ë¹ ì§€ë©´ nì´ˆ ëª»ì›€ì§ìž„)
 static int PROB_OF_OBSTACLE_TYPE[3][NUM_OF_OBSTACLE_TYPE] = {
-    { 50, 25, 25 }, // »ó
-    { 70, 15, 15 }, // Áß
-    { 90, 5, 5 }    // ÇÏ
+        { 50, 25, 25 }, // ìƒ
+        { 70, 15, 15 }, // ì¤‘
+        { 90, 5, 5 }    // í•˜
 };
 
-static int puddleFlag = 0; // ¹° ¿õµ¢ÀÌ¿¡ ºüÁ³´ÂÁö Ã¼Å©ÇÏ´Â ÇÃ·¡±×
-static int LIMIT_PUDDLE_TIME[] = {10, 5, 3}; // ¹° ¿õµ¢ÀÌ Á¦ÇÑ ½Ã°£
-static int swampFlag = 0; // ´Ë¿¡ ºüÁ³´ÂÁö Ã¼Å©ÇÏ´Â ÇÃ·¡±×
-static int LIMIT_SWAMP_COUNT[] = {9, 6, 3}; // ´Ë Á¦ÇÑ Ä«¿îÆ®
+static int puddleFlag = 0; // ë¬¼ ì›…ë©ì´ì— ë¹ ì¡ŒëŠ”ì§€ ì²´í¬í•˜ëŠ” í”Œëž˜ê·¸
+static int LIMIT_PUDDLE_TIME[] = {10, 5, 3}; // ë¬¼ ì›…ë©ì´ ì œí•œ ì‹œê°„
+static int swampFlag = 0; // ëŠªì— ë¹ ì¡ŒëŠ”ì§€ ì²´í¬í•˜ëŠ” í”Œëž˜ê·¸
+static int LIMIT_SWAMP_COUNT[] = {9, 6, 3}; // ëŠª ì œí•œ ì¹´ìš´íŠ¸

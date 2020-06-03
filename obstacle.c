@@ -1,4 +1,4 @@
-#include <time.h>
+#include "header/obstacle.h"
 
 // - obstacle types - 
 // 0: 바위 (튕겨냄)

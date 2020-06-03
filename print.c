@@ -1,14 +1,12 @@
-#include <stdio.h>
-#include "control.c"
-#include <Windows.h>
+#include "header/print.h"
 
-// Ä¿¼­ ÀÌµ¿ÇÏ´Â ÇÔ¼ö
+// ì»¤ì„œ ì´ë™í•˜ëŠ” í•¨ìˆ˜
 void gotoxy(int x, int y){
     COORD pos = {x, y};
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 }
 
-// °ÔÀÓÀ» ±×¸®´Â ÇÔ¼ö
+// ê²Œì„ì„ ê·¸ë¦¬ëŠ” í•¨ìˆ˜
 void printGame() {
     printField();
     printFlags();
@@ -17,18 +15,18 @@ void printGame() {
     printUser();
 }
 
-// ¡ß
-// À¯Àú ±×¸®´Â ÇÔ¼ö
+// â—†
+// ìœ ì € ê·¸ë¦¬ëŠ” í•¨ìˆ˜
 void printUser() {
     gotoxy(x, y);
-    printf("¡Ù");
+    printf("â˜†");
 
     //if (IS_TEST)
-        //printf("%d, %d", x, y);
+    //printf("%d, %d", x, y);
 }
 
-// ¢º¢º¢º
-// ±ê¹ß Âï´Â ÇÔ¼ö
+// â–¶â–¶â–¶
+// ê¹ƒë°œ ì°ëŠ” í•¨ìˆ˜
 extern int finderFlag;
 void printFlags() {
     int i;
@@ -36,9 +34,9 @@ void printFlags() {
     for(i = 0; i < FLAG_COUNT[LEVEL]; i++){
         gotoxy(flags[i].x, flags[i].y);
         if (flags[i].type == 4 && finderFlag) {
-            printf("¡İ");
+            printf("â—");
         } else {
-            printf("¢º");
+            printf("â–¶");
         }
 
         if (IS_TEST)
@@ -46,17 +44,17 @@ void printFlags() {
     }
 }
 
-// ¢Í¢Í¢Í
-// Àå¾Ö¹° Âï´Â ÇÔ¼ö
+// â™¨â™¨â™¨
+// ì¥ì• ë¬¼ ì°ëŠ” í•¨ìˆ˜
 void printObstacles() {
     int i;
 
     for(i = 0; i < OBSTACLE_COUNT[LEVEL]; i++){
         gotoxy(obstacles[i].x, obstacles[i].y);
         if (finderFlag) {
-            printf("¢Í");
+            printf("â™¨");
         } else {
-            printf("¢º");
+            printf("â–¶");
         }
 
         if (IS_TEST) {
@@ -69,64 +67,64 @@ void printObstacles() {
     }
 }
 
-// ¦£¦¡¦¡¦¡¦¡¦¤
-// ¦¢    ¦¢
-// ¦¦¦¡¦¡¦¡¦¡¦¥
-// ÆÇ ±×¸®´Â ÇÔ¼ö
+// â”Œâ”€â”€â”€â”€â”
+// â”‚    â”‚
+// â””â”€â”€â”€â”€â”˜
+// íŒ ê·¸ë¦¬ëŠ” í•¨ìˆ˜
 void printField() {
     int i, j;
-    
+
     gotoxy(0, 0);
 
-    // ¸Ç À­ÁÙ Ãâ·Â
-    printf("¦£");
+    // ë§¨ ìœ—ì¤„ ì¶œë ¥
+    printf("â”Œ");
     for (i = 0; i < FIELD_SIZE*2-1; i++)
-        printf("¦¡");
-    printf("¦¤\n");
-    
-    // Áß°£ Ãâ·Â
-    // Áß°£ ÇÑ ÁÙÃâ·Â
+        printf("â”€");
+    printf("â”\n");
+
+    // ì¤‘ê°„ ì¶œë ¥
+    // ì¤‘ê°„ í•œ ì¤„ì¶œë ¥
     for(i = 0; i < FIELD_SIZE-1; i++){
-        printf("¦¢");
+        printf("â”‚");
         gotoxy(FIELD_SIZE*2, i+1);
-        printf("¦¢\n");
+        printf("â”‚\n");
     }
-    
-    // ¸¶Áö¸· ÁÙ Ãâ·Â
-    printf("¦¦");
+
+    // ë§ˆì§€ë§‰ ì¤„ ì¶œë ¥
+    printf("â””");
     for(i = 0; i < FIELD_SIZE*2-1; i++)
-        printf("¦¡");
-    printf("¦¥\n");
+        printf("â”€");
+    printf("â”˜\n");
 }
 
-// ¿ìÃø¿¡ °ÔÀÓ Á¤º¸ ±×¸®´Â ÇÔ¼ö
+// ìš°ì¸¡ì— ê²Œì„ ì •ë³´ ê·¸ë¦¬ëŠ” í•¨ìˆ˜
 void printInfo() {
-    // Ãâ·Â À§Ä¡
+    // ì¶œë ¥ ìœ„ì¹˜
     const int INFO_X = FIELD_SIZE*2 + 5, INFO_Y = 3;
     gotoxy(INFO_X, INFO_Y);
     printf("===== System: %s =====", GAME_MESSAGE);
     gotoxy(INFO_X, INFO_Y + 1);
-    printf("ÇöÀç Á¡¼ö: %dÁ¡", score);
+    printf("í˜„ì¬ ì ìˆ˜: %dì ", score);
     gotoxy(INFO_X, INFO_Y + 2);
-    printf("³²Àº ½Ã°£: %dÃÊ", LIMIT_TIME - (time(NULL) - startTime));
+    printf("ë‚¨ì€ ì‹œê°„: %dì´ˆ", LIMIT_TIME - (time(NULL) - startTime));
     gotoxy(INFO_X, INFO_Y + 3);
-    printf("³²Àº ÀÌµ¿ È½¼ö: %dÈ¸", LIMIT_COUNT - move_count);
+    printf("ë‚¨ì€ ì´ë™ íšŸìˆ˜: %díšŒ", LIMIT_COUNT - move_count);
 
     gotoxy(INFO_X, INFO_Y + 6);
-    printf("======== °ÔÀÓ ¼³¸í ========");
+    printf("======== ê²Œì„ ì„¤ëª… ========");
     gotoxy(INFO_X, INFO_Y + 7);
-    printf("Á¦ÇÑ ½Ã°£, Á¦ÇÑ ÀÌµ¿ È½¼ö ³»¿¡ ÃÖ´ëÇÑ ¸¹Àº º¸¹°À» Ã£¾Æ³»´Â °ÔÀÓÀÔ´Ï´Ù.");
+    printf("ì œí•œ ì‹œê°„, ì œí•œ ì´ë™ íšŸìˆ˜ ë‚´ì— ìµœëŒ€í•œ ë§ì€ ë³´ë¬¼ì„ ì°¾ì•„ë‚´ëŠ” ê²Œì„ì…ë‹ˆë‹¤.");
     gotoxy(INFO_X, INFO_Y + 8);
-    printf("4 Á¾·ùÀÇ ±ê¹ß°ú 3 Á¾·ùÀÇ Àå¾Ö¹°ÀÌ ÀÖ¾î¿ä~");
+    printf("4 ì¢…ë¥˜ì˜ ê¹ƒë°œê³¼ 3 ì¢…ë¥˜ì˜ ì¥ì• ë¬¼ì´ ìˆì–´ìš”~");
     gotoxy(INFO_X, INFO_Y + 8);
-    printf("ÆøÅºÀ» Ã£À¸¸é ¾Ö½á ¸ğÀº º¸¹°µé±îÁö ³¯¾Æ°¥ ¼ö ÀÖÀ¸´Ï Á¶½ÉÇÏ¼¼¿ä...!!");
+    printf("í­íƒ„ì„ ì°¾ìœ¼ë©´ ì• ì¨ ëª¨ì€ ë³´ë¬¼ë“¤ê¹Œì§€ ë‚ ì•„ê°ˆ ìˆ˜ ìˆìœ¼ë‹ˆ ì¡°ì‹¬í•˜ì„¸ìš”...!!");
 
     gotoxy(INFO_X, INFO_Y + 10);
-    printf("±ê¹ß ¶Ç´Â Àå¾Ö¹°: ¢º");
+    printf("ê¹ƒë°œ ë˜ëŠ” ì¥ì• ë¬¼: â–¶");
     gotoxy(INFO_X, INFO_Y + 11);
-    printf("Å½Áö±â È¹µæ ½Ã º¸¹°: ¡İ");
+    printf("íƒì§€ê¸° íšë“ ì‹œ ë³´ë¬¼: â—");
     gotoxy(INFO_X, INFO_Y + 12);
-    printf("Å½Áö±â È¹µæ ½Ã Àå¾Ö¹°: ¢Í");
+    printf("íƒì§€ê¸° íšë“ ì‹œ ì¥ì• ë¬¼: â™¨");
 
     if(IS_TEST) {
         gotoxy(INFO_X, INFO_Y + 14);
@@ -134,58 +132,58 @@ void printInfo() {
     }
 }
 
-// ³­ÀÌµµ ¼±ÅÃ ÆäÀÌÁö ±×¸®´Â ÇÔ¼ö
+// ë‚œì´ë„ ì„ íƒ í˜ì´ì§€ ê·¸ë¦¬ëŠ” í•¨ìˆ˜
 void printLevel(int choice) {
     int X=66, Y;
     int i;
-    char level[][3] = { "»ó", "Áß", "ÇÏ" };
-    
+    char level[][3] = { "ìƒ", "ì¤‘", "í•˜" };
+
     system("cls");
     printf("\n");
-    printf("\t==================================  ³­ÀÌµµ¸¦ ¼±ÅÃÇÏ¼¼¿ä!  ================================== \n");
-    printf("\t¡Ø³­ÀÌµµ°¡ ³ô¾ÆÁú¼ö·Ï ±ê¹ß°ú Àå¾Ö¹°ÀÇ ¼ö°¡ ¸¹¾ÆÁö°í ¾ÈÁÁÀº È¿°ú°¡ ¹ß»ıÇÒ È®·üÀÌ ´Ã¾î³³´Ï´Ù :)");
+    printf("\t==================================  ë‚œì´ë„ë¥¼ ì„ íƒí•˜ì„¸ìš”!  ================================== \n");
+    printf("\tâ€»ë‚œì´ë„ê°€ ë†’ì•„ì§ˆìˆ˜ë¡ ê¹ƒë°œê³¼ ì¥ì• ë¬¼ì˜ ìˆ˜ê°€ ë§ì•„ì§€ê³  ì•ˆì¢‹ì€ íš¨ê³¼ê°€ ë°œìƒí•  í™•ë¥ ì´ ëŠ˜ì–´ë‚©ë‹ˆë‹¤ :)");
 
     for (i = 0; i < 3; i++){
         Y = 7*i + 6;
         if (choice == i) {
             printf("\n\n\n");
-            printf("\t\t\t\t\t¦®¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¯\n");
+            printf("\t\t\t\t\tâ”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”“\n");
 
-            printf("\t\t\t\t\t¦­");
+            printf("\t\t\t\t\tâ”ƒ");
             gotoxy(X, Y);
-            printf("¦­\n");
+            printf("â”ƒ\n");
 
-            printf("\t\t\t\t\t¦­");
+            printf("\t\t\t\t\tâ”ƒ");
             gotoxy(49, Y+1);
-            printf("³­ÀÌµµ: %s", level[i]);
+            printf("ë‚œì´ë„: %s", level[i]);
             gotoxy(X, Y+1);
-            printf("¦­\n");
+            printf("â”ƒ\n");
 
-            printf("\t\t\t\t\t¦­");
+            printf("\t\t\t\t\tâ”ƒ");
             gotoxy(X, Y+2);
-            printf("¦­\n");
+            printf("â”ƒ\n");
 
-            printf("\t\t\t\t\t¦±¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦°");
+            printf("\t\t\t\t\tâ”—â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”›");
         } else {
             printf("\n\n\n");
-            printf("\t\t\t\t\t¦£¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¤\n");
+            printf("\t\t\t\t\tâ”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”\n");
 
-            printf("\t\t\t\t\t¦¢");
+            printf("\t\t\t\t\tâ”‚");
             gotoxy(X, Y);
-            printf("¦¢\n");
+            printf("â”‚\n");
 
-            printf("\t\t\t\t\t¦¢");
+            printf("\t\t\t\t\tâ”‚");
             gotoxy(49, Y+1);
-            printf("³­ÀÌµµ: %s", level[i]);
+            printf("ë‚œì´ë„: %s", level[i]);
             gotoxy(X, Y+1);
-            printf("¦¢\n");
+            printf("â”‚\n");
 
-            printf("\t\t\t\t\t¦¢");
+            printf("\t\t\t\t\tâ”‚");
             gotoxy(X, Y+2);
-            printf("¦¢\n");
+            printf("â”‚\n");
 
 
-            printf("\t\t\t\t\t¦¦¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¥");
+            printf("\t\t\t\t\tâ””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜");
         }
     }
 }

@@ -1,58 +1,59 @@
 // CreatedAt: 2020-06-01
-// Author: 202011358 ÀåÁöÈÆ 
-// 
-// C ÇÁ·Î±×·¡¹Ö (0451)
-// °úÁ¦ #2: º¸¹° Ã£±â
+// Author: 202011358 ì¥ì§€í›ˆ
+//
+// C í”„ë¡œê·¸ë˜ë° (0451)
+// ê³¼ì œ #2: ë³´ë¬¼ ì°¾ê¸°
 
-#include "print.c"
-#include "flag.c"
-#include "obstacle.c"
+#include "header/print.h"
+#include "header/controls.h"
+#include "header/flag.h"
+#include "header/obstacle.h"
 
 
-// ½ÃÀÛÇÏ±â Àü ÃÊ±âÈ­ÇÏ´Â ÇÔ¼ö
+// ì‹œì‘í•˜ê¸° ì „ ì´ˆê¸°í™”í•˜ëŠ” í•¨ìˆ˜
 void initialize() {
-    // ³­ÀÌµµ ¸¸Å­ ±ê¹ß°ú Àå¾Ö¹° »ı¼º
+    // ë‚œì´ë„ ë§Œí¼ ê¹ƒë°œê³¼ ì¥ì• ë¬¼ ìƒì„±
     flags = malloc(sizeof(Flag) * FLAG_COUNT[LEVEL]);
     obstacles = malloc(sizeof(Obstacle) * OBSTACLE_COUNT[LEVEL]);
 
-    // ½ÃÀÛ ½Ã°£ ±â·Ï
+    // ì‹œì‘ ì‹œê°„ ê¸°ë¡
     startTime = time(NULL);
-    // ±ê¹ß ÃÊ±âÈ­
+    // ê¹ƒë°œ ì´ˆê¸°í™”
     suffleFlags();
-    // Àå¾Ö¹° ÃÊ±âÈ­
+    // ì¥ì• ë¬¼ ì´ˆê¸°í™”
     suffleObstacles();
 
-    // Console Ã¢ Å©±â Á¶Àı
-    system("mode con cols=150 lines=30"); 
+    // Console ì°½ í¬ê¸° ì¡°ì ˆ
+    system("mode con cols=150 lines=30");
 }
 
 int main(){
     srand(time(NULL));
 
-    // ³­ÀÌµµ ¼±ÅÃ
+    // ë‚œì´ë„ ì„ íƒ
     chooseLevel();
 
-    // °ÔÀÓ ÃÊ±âÈ­
+    // ê²Œì„ ì´ˆê¸°í™”
     initialize();
 
-    // °ÔÀÓ¿À¹ö Àü±îÁö °è¼Ó ½ÇÇà
+    // ê²Œì„ì˜¤ë²„ ì „ê¹Œì§€ ê³„ì† ì‹¤í–‰
     while(checkGameOver()){
-        // È­¸é ÃÊ±âÈ­ ÈÄ »õ·Î ±×¸²
+        // í™”ë©´ ì´ˆê¸°í™” í›„ ìƒˆë¡œ ê·¸ë¦¼
         system("cls");
         printGame();
 
-        // ÀÔ·Â ¹Ş¾Æ¼­ ±ê¹ß°ú Àå¾Ö¹°¿¡ ´ê¾Ò´ÂÁö Ã¼Å©
+        // ì…ë ¥ ë°›ì•„ì„œ ê¹ƒë°œê³¼ ì¥ì• ë¬¼ì— ë‹¿ì•˜ëŠ”ì§€ ì²´í¬
         inputKey();
         flagCheck();
         obstacleCheck();
     }
 
-    // °ÔÀÓ Á¾·á!
+    // ê²Œì„ ì¢…ë£Œ!
     system("cls");
-    printf("°ÔÀÓ Á¾·á!\n");
-    printf("´ç½ÅÀÇ Á¡¼ö´Â %dÁ¡ ÀÔ´Ï´Ù :)", score);
+    printf("ê²Œì„ ì¢…ë£Œ!\n");
+    printf("ë‹¹ì‹ ì˜ ì ìˆ˜ëŠ” %dì  ì…ë‹ˆë‹¤ :)", score);
 
-    // ¸Ş¸ğ¸® Á¤¸®
+    // ë©”ëª¨ë¦¬ ì •ë¦¬
     free(flags);
     free(obstacles);
 
