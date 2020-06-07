@@ -21,11 +21,11 @@ void suffleObstacles() {
 void bounce(){
     int c;
 
-    sprintf(DEBUG_MSG, "c: %d", c);
     // 튕긴 위치가 밖이 아닐 때까지 재실행
     while(1) {
         // 랜덤한 방향으로 튕김
         c = rand() % 4;
+        sprintf(DEBUG_MSG, "bounce: %d", c);
         switch(c) {
             case 0:
                 if (y - 2 >= 1) {
@@ -101,12 +101,12 @@ void obstacleCheck() {
 
 // obstacle type을 확률별로 반환 
 int getRandomObstacleType() {
-    // 위에서 정한 확률에 따라 깃발 타입을 뽑아 반환함
+    // 위에서 정한 확률에 따라 장애물 타입을 뽑아 반환함
     int i, t = 0;
     int dice = rand() % 100;
     for(i = 0; i < NUM_OF_OBSTACLE_TYPE; i++){
         t += PROB_OF_OBSTACLE_TYPE[LEVEL][i];
-        if (dice <= t)
+        if (dice < t)
             return i;
     }
 }

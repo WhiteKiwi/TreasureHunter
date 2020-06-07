@@ -1,6 +1,6 @@
 #include "models.c"
 
-#define IS_TEST 0 // 이 실행이 테스트인지 여부
+#define IS_TEST 1 // 이 실행이 테스트인지 여부
 static char DEBUG_MSG[50]; // DEBUG Message
 
 #define FIELD_SIZE 25 // Field 크기
@@ -14,6 +14,7 @@ static int LEVEL = 0; // 난이도
 static char *GAME_MESSAGE = ""; // 알림창에 뜰 메세지
 const char FLAG_TYPES[][50] = { "꽝!", "시작 지점으로 다시!", "펑~ 보물들이 사라져버렸어요!", "보물 탐지기!", "보물 획득!" };
 const char OBSTACLE_TYPES[][50] = { "거대한 바위에 튕겨납니다!", "웅덩이에 빠졌습니다 ㅠㅠ", "늪에 빠져버렸어요..!" };
+const char MONSTER_TYPES[][50] = { "도적을 만나 보물을 빼앗겼습니다..", "괴물을 만나 사망했습니다 [GAME OVER]" };
 
 
 static Flag *flags; // 깃발 정보
@@ -51,3 +52,18 @@ static int puddleFlag = 0; // 물 웅덩이에 빠졌는지 체크하는 플래그
 static int LIMIT_PUDDLE_TIME[] = {10, 5, 3}; // 물 웅덩이 제한 시간
 static int swampFlag = 0; // 늪에 빠졌는지 체크하는 플래그
 static int LIMIT_SWAMP_COUNT[] = {9, 6, 3}; // 늪 제한 카운트
+
+
+static Monster *monsters; // 몬스터 정보
+static int MONSTER_COUNT[] = {3, 2, 1}; // 한 번에 출력될 몬스터 수
+#define NUM_OF_MONSTER_TYPE 2 // 몬스터 종류의 수
+// 난이도에 따른 타입별 장애물이 나올 확률, 합이 100이 되어야 함
+// - monster types - 
+// 0: 도적(만나면 보물을 빼앗김)
+// 1: 괴물(GameOver)
+static int PROB_OF_MONSTER_TYPE[3][NUM_OF_MONSTER_TYPE] = {
+    { 50, 50 }, // 상
+    { 70, 30 }, // 중
+    { 90, 10 }  // 하
+};
+static int monsterFlag = 0; // 괴물에게 잡혔는지 체크하는 플래그

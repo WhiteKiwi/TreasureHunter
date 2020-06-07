@@ -7,13 +7,24 @@
 #include "print.c"
 #include "flag.c"
 #include "obstacle.c"
+#include "monster.c"
 
 
 // 시작하기 전 초기화하는 함수
 void initialize() {
+    int i;
+
     // 난이도 만큼 깃발과 장애물 생성
     flags = malloc(sizeof(Flag) * FLAG_COUNT[LEVEL]);
     obstacles = malloc(sizeof(Obstacle) * OBSTACLE_COUNT[LEVEL]);
+    monsters = malloc(sizeof(Monster) * MONSTER_COUNT[LEVEL]);
+
+    // 몬스터는 처음에 초기화
+    for(i = 0; i < MONSTER_COUNT[LEVEL]; i++) {
+        monsters[i].x = ((rand() % (FIELD_SIZE - 1)) + 1) * 2;
+        monsters[i].y = (rand() % (FIELD_SIZE - 1)) + 1;
+        monsters[i].type = getRandomMonsterType();
+    }
 
     // 시작 시간 기록
     startTime = time(NULL);
@@ -31,6 +42,7 @@ int main(){
 
     // 난이도 선택
     chooseLevel();
+    sprintf(DEBUG_MSG, "LEVEL: %d", LEVEL);
 
     // 게임 초기화
     initialize();
@@ -45,7 +57,13 @@ int main(){
         inputKey();
         flagCheck();
         obstacleCheck();
+        monsterCheck();
+        moveMonster();
     }
+
+    system("cls");
+    printGame();
+    getch();
 
     // 게임 종료!
     system("cls");

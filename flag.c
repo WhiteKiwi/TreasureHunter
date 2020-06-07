@@ -83,7 +83,7 @@ int getRandomFlagType() {
     int dice = rand() % 100;
     for(i = 0; i < NUM_OF_FLAG_TYPE; i++){
         t += PROB_OF_FLAG_TYPE[LEVEL][i];
-        if (dice <= t)
+        if (dice < t)
             return i;
     }
 }

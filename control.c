@@ -59,6 +59,10 @@ int checkGameOver() {
     // 제한 이동 횟수를 넘으면 게임 오버
     if (move_count >= LIMIT_COUNT)
         return 0;
+    // monster type 1 - 괴물을 만나면 게임 오버
+    if (monsterFlag) {
+        return 0;
+    }
     
     return 1;
 }

@@ -2,6 +2,12 @@
 #include "control.c"
 #include <Windows.h>
 
+#define USER_ICON "☆"
+#define FLAG_ICON "▶"
+#define TREASURE_ICON "◎"
+#define OBSTACLE_ICON "♨"
+#define MONSTER_ICON "♤"
+
 // 커서 이동하는 함수
 void gotoxy(int x, int y){
     COORD pos = {x, y};
@@ -13,6 +19,7 @@ void printGame() {
     printField();
     printFlags();
     printObstacles();
+    printMonsters();
     printInfo();
     printUser();
 }
@@ -21,7 +28,7 @@ void printGame() {
 // 유저 그리는 함수
 void printUser() {
     gotoxy(x, y);
-    printf("☆");
+    printf(USER_ICON);
 
     //if (IS_TEST)
         //printf("%d, %d", x, y);
@@ -35,10 +42,10 @@ void printFlags() {
 
     for(i = 0; i < FLAG_COUNT[LEVEL]; i++){
         gotoxy(flags[i].x, flags[i].y);
-        if (flags[i].type == 4 && finderFlag) {
-            printf("◎");
+        if (flags[i].type == 4 && (finderFlag || IS_TEST)) {
+            printf(TREASURE_ICON);
         } else {
-            printf("▶");
+            printf(FLAG_ICON);
         }
 
         if (IS_TEST)
@@ -53,10 +60,10 @@ void printObstacles() {
 
     for(i = 0; i < OBSTACLE_COUNT[LEVEL]; i++){
         gotoxy(obstacles[i].x, obstacles[i].y);
-        if (finderFlag) {
-            printf("♨");
+        if (finderFlag || IS_TEST) {
+            printf(OBSTACLE_ICON);
         } else {
-            printf("▶");
+            printf(FLAG_ICON);
         }
 
         if (IS_TEST) {
@@ -65,6 +72,25 @@ void printObstacles() {
                 printf("/%d", swampFlag);
             else if (obstacles[i].type == 2)
                 printf("/%d", puddleFlag);
+        }
+    }
+}
+
+// ♤♤♤
+// 몬스터 찍는 함수
+void printMonsters() {
+    int i;
+
+    for(i = 0; i < MONSTER_COUNT[LEVEL]; i++){
+        gotoxy(monsters[i].x, monsters[i].y);
+        if (finderFlag || IS_TEST) {
+            printf(MONSTER_ICON);
+        } else {
+            printf(FLAG_ICON);
+        }
+
+        if (IS_TEST) {
+            printf("-%d", monsters[i].type);
         }
     }
 }
@@ -117,19 +143,21 @@ void printInfo() {
     gotoxy(INFO_X, INFO_Y + 7);
     printf("제한 시간, 제한 이동 횟수 내에 최대한 많은 보물을 찾아내는 게임입니다.");
     gotoxy(INFO_X, INFO_Y + 8);
-    printf("4 종류의 깃발과 3 종류의 장애물이 있어요~");
-    gotoxy(INFO_X, INFO_Y + 8);
-    printf("폭탄을 찾으면 애써 모은 보물들까지 날아갈 수 있으니 조심하세요...!!");
-
+    printf("4 종류의 깃발과 3 종류의 장애물 그리고 2 종류의 몬스터가 있어요~");
+    gotoxy(INFO_X, INFO_Y + 9);
+    printf("폭탄이 터지면 애써 모은 보물들까지 날아갈 수 있으니 조심하세요...!!");
     gotoxy(INFO_X, INFO_Y + 10);
-    printf("깃발 또는 장애물: ▶");
-    gotoxy(INFO_X, INFO_Y + 11);
-    printf("탐지기 획득 시 보물: ◎");
+    printf("그리고 무시무시한 괴물도 숨어있으니 조심하세요...!");
+
     gotoxy(INFO_X, INFO_Y + 12);
-    printf("탐지기 획득 시 장애물: ♨");
+    printf("깃발 또는 장애물: %s", FLAG_ICON);
+    gotoxy(INFO_X, INFO_Y + 13);
+    printf("탐지기 획득 시 보물: %s", TREASURE_ICON);
+    gotoxy(INFO_X, INFO_Y + 14);
+    printf("탐지기 획득 시 장애물: %s", OBSTACLE_ICON);
 
     if(IS_TEST) {
-        gotoxy(INFO_X, INFO_Y + 14);
+        gotoxy(INFO_X, INFO_Y + 16);
         printf("DEBUG_MSG: %s", DEBUG_MSG);
     }
 }

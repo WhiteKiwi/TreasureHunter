@@ -19,3 +19,12 @@ typedef struct Obstacle {
     // 1: 늪 (빠지면 n번 못움직임)
     // 2: 물웅덩이 (빠지면 n초 못움직임)
 } Obstacle;
+
+typedef struct Monster {
+    int x;
+    int y;
+    int type;
+    // - monster types - 
+    // 0: 도적(만나면 보물을 빼앗김)
+    // 1: 괴물(GameOver)
+} Monster;
