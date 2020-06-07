@@ -56,22 +56,26 @@ void flagCheck() {
             
             // 타입에 해당하는 효과 실행
             switch (flags[i].type) {
+                case 0:
+                    suffleFlags();
+                    break;
                 case 1:
                     respone();
                     break;
                 case 2:
                     boom();
+                    // 폭탄이 터지면 리스폰
+                    respone();
                     break;
                 case 3:
                     finder();
                     break;
                 case 4:
                     treasure();
+                    // 보물을 찾으면 깃발을 다시 섞음
+                    suffleFlags();
                     break;
             }
-
-            // 깃발은 셔플이 기본
-            suffleFlags();
         }
     }
 }
