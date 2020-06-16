@@ -16,6 +16,8 @@ void gotoxy(int x, int y){
 
 // 게임을 그리는 함수
 void printGame() {
+    system("cls");
+
     printField();
     printFlags();
     printObstacles();
@@ -30,8 +32,8 @@ void printUser() {
     gotoxy(x, y);
     printf(USER_ICON);
 
-    //if (IS_TEST)
-        //printf("%d, %d", x, y);
+    if (IS_TEST)
+        printf("%d, %d", x, y);
 }
 
 // ▶▶▶
@@ -174,7 +176,7 @@ void printLevel(int choice) {
     printf("\t※난이도가 높아질수록 깃발과 장애물의 수가 많아지고 안좋은 효과가 발생할 확률이 늘어납니다 :)");
 
     for (i = 0; i < 3; i++){
-        Y = 7*i + 6;
+        Y = 7 * i + 6;
         if (choice == i) {
             printf("\n\n\n");
             printf("\t\t\t\t\t┏━━━━━━━━━━━━━━━━━━━━━━━━━┓\n");
@@ -205,6 +207,116 @@ void printLevel(int choice) {
             printf("\t\t\t\t\t│");
             gotoxy(49, Y+1);
             printf("난이도: %s", level[i]);
+            gotoxy(X, Y+1);
+            printf("│\n");
+
+            printf("\t\t\t\t\t│");
+            gotoxy(X, Y+2);
+            printf("│\n");
+
+
+            printf("\t\t\t\t\t└─────────────────────────┘");
+        }
+    }
+}
+
+// 메인 페이지 그리는 함수
+void printMain(int choice) {
+    int X=66, Y;
+    int i;
+    char level[][3] = { "상", "중", "하" };
+    
+    system("cls");
+    printf("\n");
+    printf("\t==================================  메뉴를 선택하세요!  ================================== \n");
+
+    for (i = 0; i < 3; i++){
+        Y = 7 * i + 6;
+        if (choice == i) {
+            printf("\n\n\n");
+            printf("\t\t\t\t\t┏━━━━━━━━━━━━━━━━━━━━━━━━━┓\n");
+
+            printf("\t\t\t\t\t┃");
+            gotoxy(X, Y);
+            printf("┃\n");
+
+            printf("\t\t\t\t\t┃");
+            gotoxy(49, Y+1);
+            printf("난이도: %s", level[i]);
+            gotoxy(X, Y+1);
+            printf("┃\n");
+
+            printf("\t\t\t\t\t┃");
+            gotoxy(X, Y+2);
+            printf("┃\n");
+
+            printf("\t\t\t\t\t┗━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+        } else {
+            printf("\n\n\n");
+            printf("\t\t\t\t\t┌─────────────────────────┐\n");
+
+            printf("\t\t\t\t\t│");
+            gotoxy(X, Y);
+            printf("│\n");
+
+            printf("\t\t\t\t\t│");
+            gotoxy(49, Y+1);
+            printf("난이도: %s", level[i]);
+            gotoxy(X, Y+1);
+            printf("│\n");
+
+            printf("\t\t\t\t\t│");
+            gotoxy(X, Y+2);
+            printf("│\n");
+
+
+            printf("\t\t\t\t\t└─────────────────────────┘");
+        }
+    }
+}
+
+// 메뉴 그리는 함수
+void printMenu(int choice) {
+    int X=66, Y;
+    int i;
+    char menu[][14] = { "메인화면", "다시시작", "게임종료" };
+    
+    system("cls");
+    printf("\n");
+    printf("\t====================================  메뉴를 선택하세요!  ==================================== \n");
+
+    for (i = 0; i < 3; i++){
+        Y = 7 * i + 6;
+        if (choice == i) {
+            printf("\n\n\n");
+            printf("\t\t\t\t\t┏━━━━━━━━━━━━━━━━━━━━━━━━━┓\n");
+
+            printf("\t\t\t\t\t┃");
+            gotoxy(X, Y);
+            printf("┃\n");
+
+            printf("\t\t\t\t\t┃");
+            gotoxy(50, Y+1);
+            printf("%s", menu[i]);
+            gotoxy(X, Y+1);
+            printf("┃\n");
+
+            printf("\t\t\t\t\t┃");
+            gotoxy(X, Y+2);
+            printf("┃\n");
+
+            printf("\t\t\t\t\t┗━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+        } else {
+            printf("\n\n\n");
+            printf("\t\t\t\t\t┌─────────────────────────┐\n");
+
+            printf("\t\t\t\t\t│");
+            gotoxy(X, Y);
+            printf("│\n");
+
+            printf("\t\t\t\t\t│");
+            gotoxy(50, Y+1);
+            printf("%s", menu[i]);
             gotoxy(X, Y+1);
             printf("│\n");
 

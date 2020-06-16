@@ -48,6 +48,48 @@ void chooseLevel() {
     }
 }
 
+// 메뉴 선택
+void chooseMenu() {
+    int choice = 0;
+    int key;
+
+    printMenu(choice);
+    while(1) {
+        key = getch();
+        if (key == ARROW_KEY) {
+            key = getch();
+            switch(key) {
+                case UP_KEY:
+                    // 위
+                    if (choice != 0) {
+                        choice--;
+                        printMenu(choice);
+                    }
+                    break;
+                    break;
+                case DOWN_KEY:
+                    // 아래
+                    if (choice != 2) {
+                        choice++;
+                        printMenu(choice);
+                    }
+                    break;
+            }
+        } else if (key == ESC_KEY) {
+            return;
+        } else if (key == ENTER_KEY) {
+            if (choice == 0) { // 메인화면
+                main();
+            } else if (choice == 1) { // 다시시작
+                
+            } else if (choice == 2) { // 게임종료
+                exit(0);
+            }
+
+            return;
+        }
+    }
+}
 
 // 게임종료 여부를 검사하는 함수
 static time_t startTime;
@@ -129,7 +171,7 @@ void inputKey() {
                 break;
         }
     } else if (key == ESC_KEY) {
-        exit(0);
+        chooseMenu();
     } else if (key == 't' && IS_TEST) {
         score = 12;
     }

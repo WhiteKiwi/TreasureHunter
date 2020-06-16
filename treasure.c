@@ -38,7 +38,7 @@ void initialize() {
 }
 
 // 게임 한 턴
-void game() {
+void startGame() {
     // 게임 초기화
     initialize();
 
@@ -57,12 +57,36 @@ void game() {
 
     system("cls");
     printGame();
-    getch();
+}
 
-    // 게임 종료!
-    system("cls");
-    printf("게임 종료!\n");
-    printf("당신의 점수는 %d점 입니다 :)", score);
+// 게임
+void game() {
+    // 난이도 선택
+    chooseLevel();
+    sprintf(DEBUG_MSG, "LEVEL: %d", LEVEL);
+
+    while(LEVEL < 4) {
+        startGame();
+        getch();
+
+        // 게임 종료!
+        system("cls");
+        printf("게임 종료!\n");
+        printf("당신의 점수는 %d점 입니다 :)", score);
+
+        if (score == 12 && LEVEL == 3) {
+            printf("LEVEL %d 클리어!\n");
+            endingOfGame();
+        } else if (score == 12) {
+            printf("LEVEL %d 클리어!\n");
+            printf("다음 단계를 시작합니다...\n");
+            LEVEL++;
+        } else {
+            printf("이번 단계를 클리어하지 못했습니다.\n");
+            printf("게임이 다시 시작됩니다!");
+        }
+        score = 0;
+    }
 }
 
 // 게임을 마무리 합니다
@@ -73,7 +97,7 @@ void endingOfGame() {
     sleep(3000);
     printf("지나가던 용: 소원이 무엇이냐\n");
     printf("소원을 입력하세요: ");
-    gets();
+    scanf("");
     printf("잘 들었다...\n");
 
     printf("용이 소원을 듣고 사라집니다.");
@@ -90,31 +114,13 @@ void endingOfGame() {
     free(obstacles);
 
     getchar();
+    exit(0);
 }
 
 int main(){
     srand(time(NULL));
 
-    // 난이도 선택
-    chooseLevel();
-    sprintf(DEBUG_MSG, "LEVEL: %d", LEVEL);
-
-    while(LEVEL < 4) {
-        game();
-
-        if (score == 12 && LEVEL == 3) {
-            printf("LEVEL %d 클리어!\n");
-            endingOfGame();
-        } else if (score == 12) {
-            printf("LEVEL %d 클리어!\n");
-            printf("다음 단계를 시작합니다...\n");
-            LEVEL++;
-        } else {
-            printf("이번 단계를 클리어하지 못했습니다.\n");
-            printf("게임이 다시 시작됩니다!");
-        }
-        score = 0;
-    }
+    game();
 
     return 0;
 }
