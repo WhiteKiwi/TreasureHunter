@@ -3,7 +3,7 @@
 #define IS_TEST 1 // 이 실행이 테스트인지 여부
 static char DEBUG_MSG[50]; // DEBUG Message
 
-#define FIELD_SIZE 25 // Field 크기
+static int FIELD_SIZE = 25; // Field 크기
 #define LIMIT_TIME 60 * 3 // 게임 진행 시간(초)
 #define LIMIT_COUNT 1000 // 이동 가능 횟수
 static int x = 2, y = 1; // x, y 좌표

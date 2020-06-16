@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-// í‚¤ë³´ë“œ ìž…ë ¥ê°’ë“¤
+// Å°º¸µå ÀÔ·Â°ªµé
 #define ARROW_KEY 224
     #define UP_KEY 72
     #define LEFT_KEY 75
@@ -12,8 +12,65 @@
 #define ENTER_KEY 13
 
 
+// °ÔÀÓ ¼³Á¤
+void setting() {
+    int choice = 0;
+    int key;
+    int level;
+    int num;
 
-// ë©”ì¸ íŽ˜ì´ì§€ ì„ íƒ
+    printSetting(choice);
+    while(1) {
+        key = getch();
+        if (key == ARROW_KEY) {
+            key = getch();
+            switch(key) {
+                case UP_KEY:
+                    // À§
+                    if (choice != 0) {
+                        choice--;
+                        printSetting(choice);
+                    }
+                    break;
+                    break;
+                case DOWN_KEY:
+                    // ¾Æ·¡
+                    if (choice != 2) {
+                        choice++;
+                        printSetting(choice);
+                    }
+                    break;
+            }
+        } else if (key == ESC_KEY) {
+            return;
+        } else if (key == ENTER_KEY) {
+            if (choice == 0) { // ¸Ê Å©±â ¼³Á¤
+                system("cls");
+                printf("¿øÇÏ´Â ¸Ê Å©±â¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
+                scanf("%d", &FIELD_SIZE);
+            } else if (choice == 1) { // ±ê¹ß ¼³Á¤
+                system("cls");
+                printf("³­ÀÌµµ¿¡ µû¸¥ ±ê¹ß °³¼ö: [%d - %d - %d]\n\n", FLAG_COUNT[0], FLAG_COUNT[1], FLAG_COUNT[2]);
+                printf("³­ÀÌµµ(»ó: 3, Áß: 2, ÇÏ: 1)¿Í ¿øÇÏ´Â ±ê¹ß °³¼ö¸¦ Â÷·Ê·Î ÀÔ·ÂÇÏ¼¼¿ä: ");
+                scanf("%d", &level);
+                scanf("%d", &FLAG_COUNT[3-level]);
+
+            } else if (choice == 2) { // Àå¾Ö¹° ¼³Á¤
+                system("cls");
+                printf("³­ÀÌµµ¿¡ µû¸¥ Àå¾Ö¹° °³¼ö: [%d - %d - %d]\n\n", OBSTACLE_COUNT[0], OBSTACLE_COUNT[1], OBSTACLE_COUNT[2]);
+                printf("³­ÀÌµµ(»ó: 3, Áß: 2, ÇÏ: 1)¿Í ¿øÇÏ´Â Àå¾Ö¹° °³¼ö¸¦ Â÷·Ê·Î ÀÔ·ÂÇÏ¼¼¿ä: ");
+                scanf("%d", &level);
+                scanf("%d", &OBSTACLE_COUNT[3-level]);
+            }
+
+            printf("\nº¯°æµÇ¾ú½À´Ï´Ù\n");
+            getch();
+            return;
+        }
+    }
+}
+
+// ¸ÞÀÎ ÆäÀÌÁö ¼±ÅÃ
 int chooseMain() {
     int choice = 0;
     int key;
@@ -25,7 +82,7 @@ int chooseMain() {
             key = getch();
             switch(key) {
                 case UP_KEY:
-                    // ìœ„
+                    // À§
                     if (choice != 0) {
                         choice--;
                         printMain(choice);
@@ -33,7 +90,7 @@ int chooseMain() {
                     break;
                     break;
                 case DOWN_KEY:
-                    // ì•„ëž˜
+                    // ¾Æ·¡
                     if (choice != 2) {
                         choice++;
                         printMain(choice);
@@ -48,7 +105,7 @@ int chooseMain() {
     }
 }
 
-// ë‚œì´ë„ ì„ íƒ
+// ³­ÀÌµµ ¼±ÅÃ
 void chooseLevel() {
     int choice = 0;
     int key;
@@ -60,7 +117,7 @@ void chooseLevel() {
             key = getch();
             switch(key) {
                 case UP_KEY:
-                    // ìœ„
+                    // À§
                     if (choice != 0) {
                         choice--;
                         printLevel(choice);
@@ -68,7 +125,7 @@ void chooseLevel() {
                     break;
                     break;
                 case DOWN_KEY:
-                    // ì•„ëž˜
+                    // ¾Æ·¡
                     if (choice != 2) {
                         choice++;
                         printLevel(choice);
@@ -84,7 +141,7 @@ void chooseLevel() {
     }
 }
 
-// ë©”ë‰´ ì„ íƒ
+// ¸Þ´º ¼±ÅÃ
 void chooseMenu() {
     int choice = 0;
     int key;
@@ -96,7 +153,7 @@ void chooseMenu() {
             key = getch();
             switch(key) {
                 case UP_KEY:
-                    // ìœ„
+                    // À§
                     if (choice != 0) {
                         choice--;
                         printMenu(choice);
@@ -104,7 +161,7 @@ void chooseMenu() {
                     break;
                     break;
                 case DOWN_KEY:
-                    // ì•„ëž˜
+                    // ¾Æ·¡
                     if (choice != 2) {
                         choice++;
                         printMenu(choice);
@@ -114,11 +171,11 @@ void chooseMenu() {
         } else if (key == ESC_KEY) {
             return;
         } else if (key == ENTER_KEY) {
-            if (choice == 0) { // ë©”ì¸í™”ë©´
+            if (choice == 0) { // ¸ÞÀÎÈ­¸é
                 main();
-            } else if (choice == 1) { // ë‹¤ì‹œì‹œìž‘
+            } else if (choice == 1) { // ´Ù½Ã½ÃÀÛ
                 startGame();
-            } else if (choice == 2) { // ê²Œìž„ì¢…ë£Œ
+            } else if (choice == 2) { // °ÔÀÓÁ¾·á
                 exit(0);
             }
 
@@ -127,21 +184,21 @@ void chooseMenu() {
     }
 }
 
-// ê²Œìž„ì¢…ë£Œ ì—¬ë¶€ë¥¼ ê²€ì‚¬í•˜ëŠ” í•¨ìˆ˜
+// °ÔÀÓÁ¾·á ¿©ºÎ¸¦ °Ë»çÇÏ´Â ÇÔ¼ö
 static time_t startTime;
 static int move_count = 0;
 int checkGameOver() {
-    // ì œí•œì‹œê°„ì„ ë„˜ìœ¼ë©´ ê²Œìž„ ì˜¤ë²„
+    // Á¦ÇÑ½Ã°£À» ³ÑÀ¸¸é °ÔÀÓ ¿À¹ö
     if (time(NULL) - startTime >= LIMIT_TIME)
         return 0;
-    // ì œí•œ ì´ë™ íšŸìˆ˜ë¥¼ ë„˜ìœ¼ë©´ ê²Œìž„ ì˜¤ë²„
+    // Á¦ÇÑ ÀÌµ¿ È½¼ö¸¦ ³ÑÀ¸¸é °ÔÀÓ ¿À¹ö
     if (move_count >= LIMIT_COUNT)
         return 0;
-    // monster type 1 - ê´´ë¬¼ì„ ë§Œë‚˜ë©´ ê²Œìž„ ì˜¤ë²„
+    // monster type 1 - ±«¹°À» ¸¸³ª¸é °ÔÀÓ ¿À¹ö
     if (monsterFlag) {
         return 0;
     }
-    // ë³´ë¬¼ 12ê°œë¥¼ ëª¨ìœ¼ë©´ ì¢…ë£Œ
+    // º¸¹° 12°³¸¦ ¸ðÀ¸¸é Á¾·á
     if (score == 12) {
         return 0;
     }
@@ -149,7 +206,7 @@ int checkGameOver() {
     return 1;
 }
 
-// ë°©í–¥í‚¤ë¥¼ ìž…ë ¥ë°›ì•„ ì¢Œí‘œë¥¼ ì¡°ì •í•˜ëŠ” í•¨ìˆ˜
+// ¹æÇâÅ°¸¦ ÀÔ·Â¹Þ¾Æ ÁÂÇ¥¸¦ Á¶Á¤ÇÏ´Â ÇÔ¼ö
 static time_t inThePuddleTime;
 void inputKey() {
     int key;
@@ -158,48 +215,48 @@ void inputKey() {
     if(key == ARROW_KEY) {
         key = getch();
         if (swampFlag) {
-            // ë§Œì•½ ëŠªì— ë¹ ì¡Œìœ¼ë©´
+            // ¸¸¾à ´Ë¿¡ ºüÁ³À¸¸é
             swampFlag--;
-            // swampFlagë§Œí¼ ì›€ì§ì´ì§€ ëª»í•¨, ì´ë™ íšŸìˆ˜ëŠ” ì°¨ê°ë¨
+            // swampFlag¸¸Å­ ¿òÁ÷ÀÌÁö ¸øÇÔ, ÀÌµ¿ È½¼ö´Â Â÷°¨µÊ
             if (swampFlag) {
                 move_count++;
                 return;
             }
         } else if (puddleFlag){
-            // ë§Œì•½ ì›…ë©ì´ì— ë¹ ì¡Œìœ¼ë©´
+            // ¸¸¾à ¿õµ¢ÀÌ¿¡ ºüÁ³À¸¸é
             if (time(NULL) - inThePuddleTime >= LIMIT_PUDDLE_TIME[LEVEL])
-                // ì œí•œì‹œê°„ì´ ë˜ë©´ flagë¥¼ ë‚´ë¦¼
+                // Á¦ÇÑ½Ã°£ÀÌ µÇ¸é flag¸¦ ³»¸²
                 puddleFlag = 0;
             else
-                // ì‹œê°„ì´ ì•„ì§ ë‚¨ì•˜ìœ¼ë©´ ì´ë™ ë¶ˆê°€, ì´ë™ íšŸìˆ˜ëŠ” ìœ ì§€
+                // ½Ã°£ÀÌ ¾ÆÁ÷ ³²¾ÒÀ¸¸é ÀÌµ¿ ºÒ°¡, ÀÌµ¿ È½¼ö´Â À¯Áö
                 return;
         }
         
         switch(key) {
-            // ìž…ë ¥ë°›ì€ ë°©í–¥ìœ¼ë¡œ ì´ë™ ê°€ëŠ¥í•˜ë©´ ì´ë™í•œë‹¤ 
+            // ÀÔ·Â¹ÞÀº ¹æÇâÀ¸·Î ÀÌµ¿ °¡´ÉÇÏ¸é ÀÌµ¿ÇÑ´Ù 
             case UP_KEY:
-                // ìœ„
+                // À§
                 if (y != 1) {
                     move_count++;
                     y--;
                 }
                 break;
             case LEFT_KEY:
-                // ì™¼ìª½
+                // ¿ÞÂÊ
                 if (x != 2) {
                     move_count++;
                     x -= 2;
                 }
                 break;
             case RIGHT_KEY:
-                // ì˜¤ë¥¸ìª½
+                // ¿À¸¥ÂÊ
                 if (x < FIELD_SIZE*2-2) {
                     move_count++;
                     x += 2;
                 }
                 break;
             case DOWN_KEY:
-                // ì•„ëž˜
+                // ¾Æ·¡
                 if (y != FIELD_SIZE-1) {
                     move_count++;
                     y++;

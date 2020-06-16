@@ -33,6 +33,8 @@ void initialize() {
     startTime = time(NULL);
     // 이동거리 초기화
     move_count = 0;
+    // 괴물 접촉 여부 초기화
+    monsterFlag = 0;
     // 깃발 초기화
     suffleFlags();
     // 장애물 초기화
@@ -133,13 +135,15 @@ int main(){
     int choice;
     srand(time(NULL));
 
-    choice = chooseMain();
-    if (choice == 0) { // 게임시작
-        game();
-    } else if (choice == 1) { // 게임설정
-        // TODO: 구현하기
-    } else if (choice == 2) { // 게임종료
-        exit(0);
+    while(1) {
+        choice = chooseMain();
+        if (choice == 0) { // 게임시작
+            game();
+        } else if (choice == 1) { // 게임설정
+            setting();
+        } else if (choice == 2) { // 게임종료
+            exit(0);
+        }
     }
 
     return 0;

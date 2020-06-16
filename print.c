@@ -130,7 +130,7 @@ void printField() {
 // 우측에 게임 정보 그리는 함수
 void printInfo() {
     // 출력 위치
-    const int INFO_X = FIELD_SIZE*2 + 5, INFO_Y = 3;
+    int INFO_X = FIELD_SIZE*2 + 5, INFO_Y = 3;
     gotoxy(INFO_X, INFO_Y);
     printf("===== System: %s =====", GAME_MESSAGE);
     gotoxy(INFO_X, INFO_Y + 1);
@@ -317,6 +317,61 @@ void printMenu(int choice) {
             printf("\t\t\t\t\t│");
             gotoxy(50, Y+1);
             printf("%s", menu[i]);
+            gotoxy(X, Y+1);
+            printf("│\n");
+
+            printf("\t\t\t\t\t│");
+            gotoxy(X, Y+2);
+            printf("│\n");
+
+
+            printf("\t\t\t\t\t└─────────────────────────┘");
+        }
+    }
+}
+
+// 설정 페이지 그리는 함수
+void printSetting(int choice) {
+    int X=66, Y;
+    int i;
+    char setting[][20] = { "맵 크기 설정", "깃발 설정", "장애물 설정" };
+    
+    system("cls");
+    printf("\n");
+    printf("\t====================================  메뉴를 선택하세요!  ==================================== \n");
+
+    for (i = 0; i < 3; i++){
+        Y = 7 * i + 6;
+        if (choice == i) {
+            printf("\n\n\n");
+            printf("\t\t\t\t\t┏━━━━━━━━━━━━━━━━━━━━━━━━━┓\n");
+
+            printf("\t\t\t\t\t┃");
+            gotoxy(X, Y);
+            printf("┃\n");
+
+            printf("\t\t\t\t\t┃");
+            gotoxy(48, Y+1);
+            printf("%s", setting[i]);
+            gotoxy(X, Y+1);
+            printf("┃\n");
+
+            printf("\t\t\t\t\t┃");
+            gotoxy(X, Y+2);
+            printf("┃\n");
+
+            printf("\t\t\t\t\t┗━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+        } else {
+            printf("\n\n\n");
+            printf("\t\t\t\t\t┌─────────────────────────┐\n");
+
+            printf("\t\t\t\t\t│");
+            gotoxy(X, Y);
+            printf("│\n");
+
+            printf("\t\t\t\t\t│");
+            gotoxy(48, Y+1);
+            printf("%s", setting[i]);
             gotoxy(X, Y+1);
             printf("│\n");
 
