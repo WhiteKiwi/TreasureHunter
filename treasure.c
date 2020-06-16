@@ -100,10 +100,13 @@ void game() {
 
 // 게임을 마무리 합니다
 void endingOfGame() {
+    Sleep(1000);
+
+    system("cls");
     printf("당신은 세상에 흩어진 12개의 드래곤볼을 모두 모았습니다..\n");
     printf("용이 나타나 소원을 들어준다고 합니다...\n\n");
 
-    Sleep(3000);
+    Sleep(2000);
     printf("지나가던 용: 소원이 무엇이냐\n");
     printf("소원을 입력하세요: ");
     scanf("%s");
