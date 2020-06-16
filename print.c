@@ -224,7 +224,7 @@ void printLevel(int choice) {
 void printMain(int choice) {
     int X=66, Y;
     int i;
-    char level[][3] = { "상", "중", "하" };
+    char main[][14] = { "게임시작", "게임설정", "게임종료" };
     
     system("cls");
     printf("\n");
@@ -241,8 +241,8 @@ void printMain(int choice) {
             printf("┃\n");
 
             printf("\t\t\t\t\t┃");
-            gotoxy(49, Y+1);
-            printf("난이도: %s", level[i]);
+            gotoxy(50, Y+1);
+            printf("%s", main[i]);
             gotoxy(X, Y+1);
             printf("┃\n");
 
@@ -260,8 +260,8 @@ void printMain(int choice) {
             printf("│\n");
 
             printf("\t\t\t\t\t│");
-            gotoxy(49, Y+1);
-            printf("난이도: %s", level[i]);
+            gotoxy(50, Y+1);
+            printf("%s", main[i]);
             gotoxy(X, Y+1);
             printf("│\n");
 

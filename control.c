@@ -12,6 +12,42 @@
 #define ENTER_KEY 13
 
 
+
+// 메인 페이지 선택
+int chooseMain() {
+    int choice = 0;
+    int key;
+
+    printMain(choice);
+    while(1) {
+        key = getch();
+        if (key == ARROW_KEY) {
+            key = getch();
+            switch(key) {
+                case UP_KEY:
+                    // 위
+                    if (choice != 0) {
+                        choice--;
+                        printMain(choice);
+                    }
+                    break;
+                    break;
+                case DOWN_KEY:
+                    // 아래
+                    if (choice != 2) {
+                        choice++;
+                        printMain(choice);
+                    }
+                    break;
+            }
+        } else if (key == ESC_KEY) {
+            exit(0);
+        } else if (key == ENTER_KEY) {
+            return choice;
+        }
+    }
+}
+
 // 난이도 선택
 void chooseLevel() {
     int choice = 0;
@@ -81,7 +117,7 @@ void chooseMenu() {
             if (choice == 0) { // 메인화면
                 main();
             } else if (choice == 1) { // 다시시작
-                
+                startGame();
             } else if (choice == 2) { // 게임종료
                 exit(0);
             }
