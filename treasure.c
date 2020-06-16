@@ -13,6 +13,9 @@
 // 시작하기 전 초기화하는 함수
 void initialize() {
     int i;
+    
+    x = 2, y = 1; // x, y 좌표
+    score = 0;
 
     // 난이도 만큼 깃발과 장애물 생성
     flags = malloc(sizeof(Flag) * FLAG_COUNT[LEVEL]);
@@ -28,6 +31,8 @@ void initialize() {
 
     // 시작 시간 기록
     startTime = time(NULL);
+    // 이동거리 초기화
+    move_count = 0;
     // 깃발 초기화
     suffleFlags();
     // 장애물 초기화
@@ -90,7 +95,6 @@ void game() {
         }
         getch();
         getch();
-        score = 0;
     }
 }
 
