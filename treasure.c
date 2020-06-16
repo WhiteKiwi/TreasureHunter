@@ -37,20 +37,14 @@ void initialize() {
     system("mode con cols=150 lines=30"); 
 }
 
-int main(){
-    srand(time(NULL));
-
-    // 난이도 선택
-    chooseLevel();
-    sprintf(DEBUG_MSG, "LEVEL: %d", LEVEL);
-
+// 게임 한 턴
+void game() {
     // 게임 초기화
     initialize();
 
     // 게임오버 전까지 계속 실행
     while(checkGameOver()){
         // 화면 초기화 후 새로 그림
-        system("cls");
         printGame();
 
         // 입력 받아서 깃발과 장애물에 닿았는지 체크
@@ -69,11 +63,58 @@ int main(){
     system("cls");
     printf("게임 종료!\n");
     printf("당신의 점수는 %d점 입니다 :)", score);
+}
 
+// 게임을 마무리 합니다
+void endingOfGame() {
+    printf("당신은 세상에 흩어진 12개의 드래곤볼을 모두 모았습니다..\n");
+    printf("용이 나타나 소원들 들어준다고 합니다...");
+
+    sleep(3000);
+    printf("지나가던 용: 소원이 무엇이냐\n");
+    printf("소원을 입력하세요: ");
+    gets();
+    printf("잘 들었다...\n");
+
+    printf("용이 소원을 듣고 사라집니다.");
+
+    sleep(3000);
+
+    printf("제공/배급: 장지훈 엔터테인먼트\n\n");
+    printf("기획: 장지훈\n");
+    printf("디자인: 장지훈\n");
+    printf("개발: 장지훈\n");
+    
     // 메모리 정리
     free(flags);
     free(obstacles);
 
     getchar();
+}
+
+int main(){
+    srand(time(NULL));
+
+    // 난이도 선택
+    chooseLevel();
+    sprintf(DEBUG_MSG, "LEVEL: %d", LEVEL);
+
+    while(LEVEL < 4) {
+        game();
+
+        if (score == 12 && LEVEL == 3) {
+            printf("LEVEL %d 클리어!\n");
+            endingOfGame();
+        } else if (score == 12) {
+            printf("LEVEL %d 클리어!\n");
+            printf("다음 단계를 시작합니다...\n");
+            LEVEL++;
+        } else {
+            printf("이번 단계를 클리어하지 못했습니다.\n");
+            printf("게임이 다시 시작됩니다!");
+        }
+        score = 0;
+    }
+
     return 0;
 }

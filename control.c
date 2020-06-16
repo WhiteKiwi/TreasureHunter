@@ -63,6 +63,10 @@ int checkGameOver() {
     if (monsterFlag) {
         return 0;
     }
+    // 보물 12개를 모으면 종료
+    if (score == 12) {
+        return 0;
+    }
     
     return 1;
 }
@@ -124,7 +128,9 @@ void inputKey() {
                 }
                 break;
         }
-    } else if(key == ESC_KEY) {
+    } else if (key == ESC_KEY) {
         exit(0);
+    } else if (key == 't' && IS_TEST) {
+        score = 12;
     }
 }
