@@ -29,12 +29,18 @@ void initialize() {
         monsters[i].type = getRandomMonsterType();
     }
 
+    // 플래그들 초기화
+    // 괴물 접촉 여부 초기화
+    monsterFlag = 0;
+    swampFlag = 0; // 늪에 빠졌는지 체크하는 플래그
+    puddleFlag = 0; // 물 웅덩이에 빠졌는지 체크하는 플래그
+    
+    
+
     // 시작 시간 기록
     startTime = time(NULL);
     // 이동거리 초기화
     move_count = 0;
-    // 괴물 접촉 여부 초기화
-    monsterFlag = 0;
     // 깃발 초기화
     suffleFlags();
     // 장애물 초기화
